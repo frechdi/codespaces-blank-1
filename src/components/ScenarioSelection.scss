@@ -1,0 +1,163 @@
+.scenario-selection {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 80px 20px 40px;
+  font-family: Arial, sans-serif;
+  background-color: #000000;
+  min-height: 100vh;
+
+  h2 {
+    text-align: center;
+    margin-bottom: 15px;
+    color: #ffffff;
+    font-size: 32px;
+    font-weight: bold;
+  }
+
+  .subtitle {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 18px;
+    color: #cccccc;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.5;
+    font-weight: 500;
+  }
+
+  .scenario-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 50px;
+  }
+
+  .scenario-card {
+    border: none;
+    border-radius: 15px;
+    padding: 30px;
+    background-color: #ffffff;
+    box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(255, 255, 255, 0.15);
+    }
+
+    .character-image {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    .scenario-title {
+      font-size: 24px;
+      margin-bottom: 15px;
+      color: #222;
+      font-weight: bold;
+    }
+
+    .scenario-description {
+      margin-bottom: 15px;
+      color: #555;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    .character-profile {
+      margin-top: 20px;
+      padding: 20px;
+      border-radius: 10px;
+      background-color: #f8f8f8;
+      color: #333;
+
+      .character-name {
+        font-size: 22px;
+        margin-bottom: 15px;
+        color: #333;
+        font-weight: bold;
+      }
+
+      .character-details {
+        p {
+          margin: 8px 0;
+          font-size: 16px;
+          line-height: 1.4;
+          color: #444;
+        }
+      }
+
+      .personality-traits {
+        margin-top: 20px;
+
+        h5 {
+          font-size: 18px;
+          margin-bottom: 10px;
+          color: #333;
+        }
+      }
+    }
+
+    .select-button {
+      display: block;
+      width: 100%;
+      padding: 15px;
+      margin-top: 30px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background-color: #0056b3;
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0, 123, 255, 0.4);
+      }
+    }
+  }
+
+  .note {
+    text-align: center;
+    margin-top: 40px;
+    font-style: italic;
+    color: #cccccc;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .scenario-selection {
+    padding: 60px 20px 20px;
+
+    h2 {
+      font-size: 28px;
+    }
+
+    .subtitle {
+      font-size: 16px;
+    }
+
+    .scenario-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .scenario-card {
+      padding: 20px;
+
+      .scenario-title {
+        font-size: 22px;
+      }
+
+      .character-profile .character-name {
+        font-size: 20px;
+      }
+    }
+  }
+}

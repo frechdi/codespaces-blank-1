@@ -12,11 +12,18 @@ import { Button } from '../components/button/Button';
 
 import './VoiceChat.scss';
 
+import { character1Prompt } from '../prompts/character1';
+import { character2Prompt } from '../prompts/character2';
+import { character3Prompt } from '../prompts/character3';
+
+import { Scenario } from '../components/ScenarioSelection';
+
 type Props = {
   scrapedContent: string;
+  selectedScenario: Scenario | null;
 };
 
-export const VoiceChat: React.FC<Props> = ({ scrapedContent }) => {
+export const VoiceChat: React.FC<Props> = ({ scrapedContent, selectedScenario }) => {
   const apiKey = USE_LOCAL_RELAY_SERVER_URL
     ? ''
     : localStorage.getItem('tmp::voice_api_key') ||
@@ -26,15 +33,24 @@ export const VoiceChat: React.FC<Props> = ({ scrapedContent }) => {
     localStorage.setItem('tmp::voice_api_key', apiKey);
   }
 
+  const getCharacterPrompt = (scenario: Scenario | null) => {
+    if (!scenario) return character1Prompt;
+    switch (scenario.title) {
+      case "Gespräch am Rhein in Basel":
+        return character1Prompt;
+      case "Einkauf im Migros in Zürich":
+        return character2Prompt;
+      case "Papa Joe's in Basel":
+        return character3Prompt;
+      default:
+        return character1Prompt;
+    }
+  };
+
   const instructions = `SYSTEM SETTINGS:
 ------
 INSTRUCTIONS:
-- You will receive website data about a product.
-- You are an artificial intelligence agent responsible to qualify leads and see if they are good fit for the product.
-- Please make sure to respond with a helpful voice via audio
-- Your response should be concise and to the point, keep it short, less than 200 characters max.
-- You can ask the user questions
-- Be open to exploration and conversation
+${getCharacterPrompt(selectedScenario)}
 
 ------
 PERSONALITY:
@@ -232,7 +248,7 @@ ${scrapedContent}
               serverCanvas,
               serverCtx,
               result.values,
-              '#fff700',
+              '#FFC0CB', // Changed to pink
               10,
               0,
               8
@@ -291,7 +307,7 @@ ${scrapedContent}
       // cleanup; resets to defaults
       client.reset();
     };
-  }, []);
+  }, [selectedScenario]);
 
   /**
    * Render the application
@@ -300,7 +316,7 @@ ${scrapedContent}
     <div data-component="VoiceChat">
       <div className="content-top">
         <div className="content-title">
-          <span>AI Voice Agent</span>
+          <span>AI Voice Agent: {selectedScenario ? selectedScenario.title : 'General Conversation'}</span>
         </div>
         <div className="content-api-key">
           {!USE_LOCAL_RELAY_SERVER_URL && (
@@ -316,6 +332,11 @@ ${scrapedContent}
       </div>
       <div className="content-main">
         <div className="content-logs">
+          {selectedScenario && (
+            <div className="scene-image">
+              <img src={selectedScenario.character.image} alt="Scene" />
+            </div>
+          )}
           <div className="content-block events">
             <div className="visualization">
               <div className="visualization-entry client">
@@ -378,7 +399,7 @@ ${scrapedContent}
           )}
           <div className="content-actions">
             <Button
-              label={isConnected ? 'Disconnect' : 'Connect'}
+              label={isConnected ? 'Disconnect' : 'Person ansprechen'}
               iconPosition={isConnected ? 'end' : 'start'}
               icon={isConnected ? X : Zap}
               buttonStyle={isConnected ? 'regular' : 'action'}
